@@ -18,11 +18,11 @@ It is part of Office 365 but not part of the [Office Open XML](https://en.wikipe
 
 Where the `2096f6a2-d2f7-48be-b329-b73aaa526e5d` in the name of each custom property is the the label id, which is the main metadata that define the label (public, internal, ...) .
 
-The standard way of using MIP labels is to apply them inside on Office 365 apps like Excel, but there are alternatives like the 'Set-AIPFileLabel' powershell tool provided by Microsoft. This powershell tool [can be used from python](https://gist.github.com/brunomsantiago/c79d17bf74c4c78c51debf7f7e0bafb5), but I've found it may make take several seconds to apply the label to each file.
+The standard way of using MIP labels is to apply them inside on Office 365 apps like Excel, but there are alternatives like the 'Set-AIPFileLabel' powershell tool provided by Microsoft. This powershell tool can be used from python (see [mip_powershell.py](https://github.com/brunomsantiago/mip_python/blob/main/mip_powershell.py)), but I've found it may make take several seconds to apply the label to each file.
 
 As far as I understand, MIP wasn't designed to be used without an Office 365 account, specially because the ActionId which, according to the documentation, is changed every time a MIP label is applied and may be used for audit purposes. However I've found that if you copy the custom properties from an already labeled file to a new file, it will work without issues.
 
-The code snippet below ([mip_openpyxl.py]()) demonstrates how to copy custom properties from a MIP labeled file to a new workbook.
+The code snippet below ([mip_openpyxl.py](https://github.com/brunomsantiago/mip_python/blob/main/mip_openpyxl.py)) demonstrates how to use `openpyxl` to copy the custom properties from a MIP labeled file to a new workbook.
 
 ```Python
 import openpyxl
