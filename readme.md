@@ -29,7 +29,7 @@ import openpyxl
 
 # Loading an excel file with sensitivity label (MIP Label)
 file_with_mip_label = 'file_with_mip_label.xlsx'
-workbook_with_mip_label = openpyxl.load_workbook(file)
+workbook_with_mip_label = openpyxl.load_workbook(file_with_mip_label)
 
 # Creating a new workbook and writing something in ht
 new_workbook = openpyxl.Workbook()
