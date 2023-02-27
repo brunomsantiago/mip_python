@@ -16,7 +16,7 @@ It is part of Office 365 but not part of the [Office Open XML](https://en.wikipe
 |MSIP_Label_2096f6a2-d2f7-48be-b329-b73aaa526e5d_ContentBits|2
 |MSIP_Label_2096f6a2-d2f7-48be-b329-b73aaa526e5d_ActionId   |88124cf5-1340-457d-90e1-0000a9427c9
 
-Where the `2096f6a2-d2f7-48be-b329-b73aaa526e5d` in the name of each custom property is the the label id, which is the main metadata that define the label (public, internal, ...) .
+Where the `2096f6a2-d2f7-48be-b329-b73aaa526e5d` in the name of each custom property is the the `label_id`, which is the main metadata that defines the label (public, internal, ...) .
 
 The standard way of using MIP labels is to apply them inside on Office 365 apps like Excel, but there are official alternatives like the [Set-AIPFileLabel](https://learn.microsoft.com/en-us/powershell/module/azureinformationprotection/set-aipfilelabel?view=azureipps) powershell tool provided by Microsoft.
 
@@ -60,13 +60,13 @@ new_workbook.save('new_file_with_same_mip_label.xlsx')
 ```
 ## Method 2: Call powershell standard tool from  Python
 
-This method involves using a PowerShell command as a subprocess to apply the sensitivity label. It relies on the [Set-AIPFileLabel](https://learn.microsoft.com/en-us/powershell/module/azureinformationprotection/set-aipfilelabel?view=azureipps) PowerShell tool, which requires only the `filepath` and `label_id` for the sensitivity label.
+This method involves using a powershell command as a subprocess to apply the sensitivity label. It relies on the [Set-AIPFileLabel](https://learn.microsoft.com/en-us/powershell/module/azureinformationprotection/set-aipfilelabel?view=azureipps) powershell tool, which requires only the `filepath` and `label_id` for the sensitivity label.
 
 Note that some sensitivity labels may have a `MainLabelId` and a `SubLabelId`. In such cases, only the `SubLabelId` should be used as the `label_id` with the `Set-AIPFileLabel` tool, as stated in the [tool's documentation](https://learn.microsoft.com/en-us/powershell/module/azureinformationprotection/set-aipfilelabel?view=azureipps).
 
 The main advantage of this method is it uses an official tool. However you can only use it in a Windows machine within the organization, which may limit some applications. Also I have conducted some tests using this method and found it may make take several seconds to apply the label to each file.
 
-To find the label_id you can inspect the office document custom properties or use other PowerShell called [Get-AIPFileStatus](https://learn.microsoft.com/en-us/powershell/module/azureinformationprotection/get-aipfilestatus?view=azureipps), which several properties including `MainLabelId` and a `SubLabelId`.
+To find the label_id you can inspect the office document custom properties or use other powershell called [Get-AIPFileStatus](https://learn.microsoft.com/en-us/powershell/module/azureinformationprotection/get-aipfilestatus?view=azureipps), which several properties including `MainLabelId` and a `SubLabelId`.
 
 The code snippet below ([mip_powershell.py](https://github.com/brunomsantiago/mip_python/blob/main/mip_powershell.py)) demonstrates two Python functions, one to  find the `label_id` and other apply the sensitivity label to file to.
 
