@@ -4,7 +4,7 @@ import openpyxl
 file_with_mip_label = 'file_with_mip_label.xlsx'
 workbook_with_mip_label = openpyxl.load_workbook(file_with_mip_label)
 
-# Creating a new workbook and writing something in ht
+# Creating a new workbook and writing something in it
 new_workbook = openpyxl.Workbook()
 worksheet = new_workbook.active
 cell = worksheet.cell(row=1, column=1)

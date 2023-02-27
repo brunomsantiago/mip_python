@@ -23,15 +23,15 @@ The standard way of using MIP labels is to apply them inside on Office 365 apps 
 
 ## Method 1: Copying Custom Properties
 
-This method involves copying custom properties from a previously labeled file to a new one. It is a simple, fast and does not require external tools nor an Office 365 account. While effective, this method  is non-standard and may have potential drawbacks.
+This method involves copying custom properties from a previously labeled file to a new one. It is simple, fast and does not require external tools nor an Office 365 account. While effective, this method  is non-standard and may have potential drawbacks.
  
 I have conducted some tests using Python-generated Excel spreadsheets and have not encountered any issues. The file opens normally, without any warnings, and with the correct sensitivity label applied.
 
-The custom properties `MSIP_Label_{label-id}_ActionId` or `MSIP_Label_{label-id}_SetDate` may present potential issues in the future.
+I think the custom properties `MSIP_Label_{label-id}_ActionId` or `MSIP_Label_{label-id}_SetDate` may present potential issues in the future.
 
-According to the documentation `ActionId` is changed every time a MIP label is applied by a standard tool and may be used for audit purposes. It seems to be an UID and it would be easy to generate a new one in Python, but since the documentation mentions audit purposes I suspect it is also sent to the organization's Azure Directory.
+According to the documentation `ActionId` is changed every time a MIP label is applied by a standard tool and may be used for audit purposes. It seems to be an UID and it would be easy to generate a new one in Python, but since [the documentation](https://learn.microsoft.com/en-us/information-protection/develop/concept-mip-metadata) mentions audit purposes I suspect it is also sent to the organization's Azure Directory.
 
-The `SetDate` is also changed every time a MIP label is applied by just copying it from other file it may be inconsistent with the file creation date. It also would be easy to generate a new timestamp with python.
+The `SetDate` is also changed every time a MIP label is applied and by just copying it from other file it may be inconsistent with the file creation date. It also would be easy to generate a new timestamp with python.
 
 But with no issues so far, I plan to continue using this method of copying all properties, as it is akin to updating the original file with Python.
 
@@ -44,7 +44,7 @@ import openpyxl
 file_with_mip_label = 'file_with_mip_label.xlsx'
 workbook_with_mip_label = openpyxl.load_workbook(file_with_mip_label)
 
-# Creating a new workbook and writing something in ht
+# Creating a new workbook and writing something in it
 new_workbook = openpyxl.Workbook()
 worksheet = new_workbook.active
 cell = worksheet.cell(row=1, column=1)
@@ -68,7 +68,7 @@ The main advantage of this method is it uses an official tool. However you can o
 
 To find the label_id you can inspect the office document custom properties or use other PowerShell called [Get-AIPFileStatus](https://learn.microsoft.com/en-us/powershell/module/azureinformationprotection/get-aipfilestatus?view=azureipps), which several properties including `MainLabelId` and a `SubLabelId`.
 
-The code snippet below ([mip_powershell.py](https://github.com/brunomsantiago/mip_python/blob/main/mip_powershell.py)) demonstrates two functions, one to apply the sensitivity label to file and other to find the label_id.
+The code snippet below ([mip_powershell.py](https://github.com/brunomsantiago/mip_python/blob/main/mip_powershell.py)) demonstrates two Python functions, one to  find the `label_id` and other apply the sensitivity label to file to.
 
 ```Python
 
